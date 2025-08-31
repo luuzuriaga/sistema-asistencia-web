@@ -33,7 +33,7 @@ sistema-asistencia-web/
 │── index.php         # Página principal
 │── /css              # Estilos
 │── /js               # Scripts
-│── /images           # Imágenes
+│── /images           # Imágenes e iconos
 │── /includes         # Archivos de configuración
 │── /db               # Script de la base de datos
 
