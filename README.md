@@ -29,45 +29,50 @@ Está diseñado para reducir:
 
 ## 📂 Estructura del proyecto
 
-/sistema-asistencia-web  
-├── config.php
-├── controlador
+```bash
+/sistema-asistencia-web
+├── backup.php                     # Script para realizar copias de seguridad
+├── config.php                     # Configuración principal de la aplicación
+├── controlador/                   # Lógica de controladores
 │   ├── controlador_cargos.php
 │   ├── controlador_login.php
 │   ├── controlador_logout.php
 │   ├── controlador_registrar_asistencia.php
 │   ├── controlador_registrar_empleado.php
-│   ├── controlador_reportes.php
-│   └── controlador_usuarios.php
-├── index.php
-├── modelo
+│   └── controlador_reportes.php
+├── index.php                      # Página principal del sistema
+├── logs/
+│   └── error.log                  # Registro de errores
+├── modelo/                        # Modelos de datos (interacción con la BD)
 │   ├── asistencia.php
 │   ├── cargo.php
 │   ├── conexion.php
 │   ├── empleado.php
 │   └── usuario.php
-├── README.md
-├── reportes
-│   └── generar_reporte.php
-└── vista
-    ├── dashboard
+├── README.md                      # Documentación del proyecto
+├── reportes/
+│   └── generar_reporte.php        # Generación de reportes
+└── vista/                         # Vistas (interfaz de usuario)
+    ├── dashboard/
     │   ├── cargos.php
     │   ├── empleados.php
     │   ├── footer.php
     │   ├── header.php
     │   ├── index.php
+    │   ├── perfil.php
     │   ├── reportes.php
     │   ├── sidebar.php
     │   └── usuarios.php
-    ├── login
-    │   └── login.php
-    └── public
-        ├── css
+    ├── login/
+    │   └── login.php              # Vista de inicio de sesión
+    └── public/                    # Archivos públicos
+        ├── css/
         │   └── estilos.css
-        ├── images
+        ├── images/
         │   ├── demoweb.png
-        │   └── logo1.png
-        └── js
+        │   ├── logo1.png
+        │   └── logo2.png
+        └── js/
             └── script.js
 
 
