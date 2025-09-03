@@ -1,5 +1,5 @@
 <?php
-include_once '../modelo/usuario.php';
+include_once __DIR__ . '/../modelo/usuario.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $usuario = $_POST['usuario'];
