@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once __DIR__ . '/../modelo/usuario.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
