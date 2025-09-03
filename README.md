@@ -29,51 +29,7 @@ Está diseñado para reducir:
 
 ## 📂 Estructura del proyecto
 
-sistema-asistencia-web/
-/mnt/L/sistema-asistencia-web  on main 
-> tree .
-.
-├── config.php
-├── controlador
-│   ├── controlador_cargos.php
-│   ├── controlador_login.php
-│   ├── controlador_logout.php
-│   ├── controlador_registrar_asistencia.php
-│   ├── controlador_registrar_empleado.php
-│   ├── controlador_reportes.php
-│   └── controlador_usuarios.php
-├── images
-│   └── demoweb.png
-├── modelo
-│   ├── asistencia.php
-│   ├── cargo.php
-│   ├── conexion.php
-│   ├── empleado.php
-│   └── usuario.php
-├── README.md
-├── reportes
-│   └── generar_reporte.php
-└── vista
-    ├── dashboard
-    │   ├── cargos.php
-    │   ├── empleados.php
-    │   ├── footer.php
-    │   ├── header.php
-    │   ├── index.php
-    │   ├── reportes.php
-    │   ├── sidebar.php
-    │   └── usuarios.php
-    ├── login
-    │   └── login.php
-    └── public
-        ├── css
-        │   └── estilos.css
-        └── js
-            └── script.js
-
-11 directories, 27 files
-
- /mnt/L/sistema-asistencia-web  on main 
+/sistema-asistencia-web  
 ├── config.php
 ├── controlador
 │   ├── controlador_cargos.php
