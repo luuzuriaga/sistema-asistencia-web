@@ -1,6 +1,8 @@
 <?php
 include_once '../../config.php';
 include_once '../../controlador/controlador_login.php';
+
+$error = isset($_GET['error']) ? sanitize_input($_GET['error']) : '';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -40,11 +42,12 @@ include_once '../../controlador/controlador_login.php';
                             <p class="text-muted">Ingrese sus credenciales para continuar</p>
                         </div>
                         
-                        <?php if (isset($error)): ?>
+                        <?php if (!empty($error)): ?>
                         <div class="alert alert-danger"><?php echo $error; ?></div>
                         <?php endif; ?>
                         
                         <form method="POST">
+                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                             <div class="mb-3">
                                 <label for="usuario" class="form-label">Usuario</label>
                                 <input type="text" class="form-control" id="usuario" name="usuario" required>

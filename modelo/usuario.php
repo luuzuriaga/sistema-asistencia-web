@@ -9,77 +9,71 @@ class Usuario {
         $this->conn = $conexion->conectar();
     }
     
-    /**
-     * Validar credenciales de usuario
-     */
     public function validar($usuario, $password) {
-        $sql = "SELECT * FROM usuario WHERE usuario = '$usuario' AND password = '$password'";
-        $result = $this->conn->query($sql);
+        $usuario = $this->conn->real_escape_string($usuario);
+        $password = md5($password);
         
-        if ($result->num_rows > 0) {
+        $stmt = $this->conn->prepare("SELECT * FROM usuario WHERE usuario = ? AND password = ?");
+        $stmt->bind_param("ss", $usuario, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
             return $result->fetch_assoc();
         }
         return false;
     }
     
-    /**
-     * Obtener todos los usuarios
-     */
     public function listar() {
         $sql = "SELECT * FROM usuario ORDER BY apellido, nombre";
         $result = $this->conn->query($sql);
         return $result;
     }
     
-    /**
-     * Obtener usuario por ID
-     */
     public function obtenerPorId($id) {
-        $sql = "SELECT * FROM usuario WHERE id_usuario = $id";
-        $result = $this->conn->query($sql);
+        $stmt = $this->conn->prepare("SELECT * FROM usuario WHERE id_usuario = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
     
-    /**
-     * Crear nuevo usuario
-     */
     public function crear($nombre, $apellido, $usuario, $password) {
+        $nombre = $this->conn->real_escape_string($nombre);
+        $apellido = $this->conn->real_escape_string($apellido);
+        $usuario = $this->conn->real_escape_string($usuario);
         $passwordHash = md5($password);
-        $sql = "INSERT INTO usuario (nombre, apellido, usuario, password) 
-                VALUES ('$nombre', '$apellido', '$usuario', '$passwordHash')";
-        return $this->conn->query($sql);
+        
+        $stmt = $this->conn->prepare("INSERT INTO usuario (nombre, apellido, usuario, password) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $nombre, $apellido, $usuario, $passwordHash);
+        return $stmt->execute();
     }
     
-    /**
-     * Actualizar usuario existente
-     */
     public function actualizar($id, $nombre, $apellido, $usuario, $password = null) {
+        $nombre = $this->conn->real_escape_string($nombre);
+        $apellido = $this->conn->real_escape_string($apellido);
+        $usuario = $this->conn->real_escape_string($usuario);
+        
         if ($password) {
             $passwordHash = md5($password);
-            $sql = "UPDATE usuario 
-                    SET nombre = '$nombre', apellido = '$apellido', 
-                        usuario = '$usuario', password = '$passwordHash' 
-                    WHERE id_usuario = $id";
+            $stmt = $this->conn->prepare("UPDATE usuario SET nombre = ?, apellido = ?, usuario = ?, password = ? WHERE id_usuario = ?");
+            $stmt->bind_param("ssssi", $nombre, $apellido, $usuario, $passwordHash, $id);
         } else {
-            $sql = "UPDATE usuario 
-                    SET nombre = '$nombre', apellido = '$apellido', usuario = '$usuario' 
-                    WHERE id_usuario = $id";
+            $stmt = $this->conn->prepare("UPDATE usuario SET nombre = ?, apellido = ?, usuario = ? WHERE id_usuario = ?");
+            $stmt->bind_param("sssi", $nombre, $apellido, $usuario, $id);
         }
-        return $this->conn->query($sql);
+        return $stmt->execute();
     }
     
-    /**
-     * Eliminar usuario
-     */
     public function eliminar($id) {
-        $sql = "DELETE FROM usuario WHERE id_usuario = $id";
-        return $this->conn->query($sql);
+        $stmt = $this->conn->prepare("DELETE FROM usuario WHERE id_usuario = ?");
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
     }
     
-    /**
-     * Verificar si el usuario ya existe
-     */
     public function existeUsuario($usuario, $excluirId = null) {
+        $usuario = $this->conn->real_escape_string($usuario);
+        
         $sql = "SELECT * FROM usuario WHERE usuario = '$usuario'";
         if ($excluirId) {
             $sql .= " AND id_usuario != $excluirId";
@@ -88,18 +82,13 @@ class Usuario {
         return $result->num_rows > 0;
     }
     
-    /**
-     * Cambiar contraseña
-     */
     public function cambiarPassword($id, $nuevaPassword) {
         $passwordHash = md5($nuevaPassword);
-        $sql = "UPDATE usuario SET password = '$passwordHash' WHERE id_usuario = $id";
-        return $this->conn->query($sql);
+        $stmt = $this->conn->prepare("UPDATE usuario SET password = ? WHERE id_usuario = ?");
+        $stmt->bind_param("si", $passwordHash, $id);
+        return $stmt->execute();
     }
     
-    /**
-     * Obtener estadísticas de usuarios
-     */
     public function obtenerEstadisticas() {
         $sql = "SELECT COUNT(*) as total FROM usuario";
         $result = $this->conn->query($sql);

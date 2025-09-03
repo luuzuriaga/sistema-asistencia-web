@@ -25,7 +25,8 @@ class Conexion {
             return $this->conn;
             
         } catch (Exception $e) {
-            die($e->getMessage());
+            log_error("Error de conexión: " . $e->getMessage());
+            die("Error de conexión a la base de datos. Por favor, intente más tarde.");
         }
     }
     
@@ -35,17 +36,14 @@ class Conexion {
         }
     }
     
-    // Método para verificar la conexión
     public function verificarConexion() {
         try {
             $conn = $this->conectar();
             if ($conn) {
-                echo "✅ Conexión MySQL exitosa";
-                $this->cerrar();
                 return true;
             }
         } catch (Exception $e) {
-            echo "❌ Error de conexión: " . $e->getMessage();
+            log_error("Verificación de conexión fallida: " . $e->getMessage());
             return false;
         }
     }
@@ -55,7 +53,11 @@ class Conexion {
 if (isset($_GET['testdb'])) {
     require_once '../config.php';
     $conexion = new Conexion();
-    $conexion->verificarConexion();
+    if ($conexion->verificarConexion()) {
+        echo "✅ Conexión MySQL exitosa";
+    } else {
+        echo "❌ Error de conexión";
+    }
     exit();
 }
 ?>

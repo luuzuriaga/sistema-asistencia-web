@@ -1,10 +1,25 @@
 <?php
+include_once '../config.php';
 include_once '../modelo/empleado.php';
 include_once '../modelo/asistencia.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Verificar token CSRF
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $mensaje = "Token de seguridad inválido";
+        header("Location: ../public/index.php?mensaje=" . urlencode($mensaje));
+        exit();
+    }
+    
     if (isset($_POST['btnentrada']) || isset($_POST['btnsalida'])) {
-        $dni = $_POST['dni'];
+        $dni = sanitize_input($_POST['dni']);
+        
+        // Validar DNI
+        if (strlen($dni) != 8 || !is_numeric($dni)) {
+            $mensaje = "ERROR: El DNI debe tener 8 dígitos numéricos";
+            header("Location: ../public/index.php?mensaje=" . urlencode($mensaje));
+            exit();
+        }
         
         $empleadoModel = new Empleado();
         $empleado = $empleadoModel->obtenerPorDni($dni);
@@ -28,6 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $mensaje = "INCORRECTO: El DNI ingresado no existe";
         }
+        
+        header("Location: ../public/index.php?mensaje=" . urlencode($mensaje));
+        exit();
     }
 }
 ?>

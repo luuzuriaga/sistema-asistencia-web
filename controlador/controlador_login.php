@@ -1,9 +1,18 @@
 <?php
+include_once __DIR__ . '/../config.php';
 include_once __DIR__ . '/../modelo/usuario.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $usuario = $_POST['usuario'];
-    $password = md5($_POST['password']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Verificar token CSRF
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $error = "Token de seguridad inválido";
+        header("Location: ../vista/login/login.php?error=" . urlencode($error));
+        exit();
+    }
+    
+    // Sanitizar entradas
+    $usuario = sanitize_input($_POST['usuario']);
+    $password = sanitize_input($_POST['password']);
     
     $usuarioModel = new Usuario();
     $user = $usuarioModel->validar($usuario, $password);
@@ -17,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     } else {
         $error = "Usuario o contraseña incorrectos";
+        header("Location: ../vista/login/login.php?error=" . urlencode($error));
+        exit();
     }
 }
 ?>
