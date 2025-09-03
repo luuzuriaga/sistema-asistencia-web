@@ -1,0 +1,44 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.btn {
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-weight: bold;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 18px;
+}
+
+h1, h3 {
+    color: #343a40;
+    font-weight: bold;
+}
+
+.imagen1 img, .imagen2 img {
+    max-height: 120px;
+}
