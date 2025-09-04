@@ -60,7 +60,7 @@ $error = isset($_GET['error']) ? sanitize_input($_GET['error']) : '';
                         </form>
                         
                         <div class="text-center mt-3">
-                            <a href="../public/index.php">Volver al registro de asistencia</a>
+                            <a href="/index.php">Volver al registro de asistencia</a>
                         </div>
                     </div>
                 </div>
