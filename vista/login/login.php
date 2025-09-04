@@ -46,7 +46,7 @@ $error = isset($_GET['error']) ? sanitize_input($_GET['error']) : '';
                         <div class="alert alert-danger"><?php echo $error; ?></div>
                         <?php endif; ?>
                         
-                        <form method="POST">
+                        <form method="POST" action="../../controlador/controlador_login.php">
                             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                             <div class="mb-3">
                                 <label for="usuario" class="form-label">Usuario</label>

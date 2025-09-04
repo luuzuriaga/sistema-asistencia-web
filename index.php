@@ -1,6 +1,8 @@
 <?php
-include_once '../config.php';
-include_once '../controlador/controlador_registrar_asistencia.php';
+include_once __DIR__ . "/config.php";
+include_once __DIR__ . "/controlador/controlador_registrar_asistencia.php";
+
+
 
 // Mostrar mensaje si existe
 $mensaje = isset($_GET['mensaje']) ? sanitize_input($_GET['mensaje']) : '';

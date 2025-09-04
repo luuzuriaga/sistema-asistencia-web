@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['usuario'] = $user['usuario'];
         $_SESSION['nombre'] = $user['nombre'] . ' ' . $user['apellido'];
         $_SESSION['id_usuario'] = $user['id_usuario'];
-        
-        header('Location: ../vista/dashboard/index.php');
+
+        header('Location: ../vista/dashoboard/index.php');
         exit();
     } else {
         $error = "Usuario o contraseña incorrectos";
