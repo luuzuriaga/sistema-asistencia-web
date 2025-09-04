@@ -1,9 +1,9 @@
 <?php
-include_once(_DIR_ . "/../config.php");
+include_once(__DIR__ . "/../config.php");
 
-include_once(_DIR_ . "/../modelo/empleado.php");
+include_once(__DIR__ . "/../modelo/empleado.php");
 
-include_once(_DIR_ . "/../modelo/asistencia.php");
+include_once(__DIR__ . "/../modelo/asistencia.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Verificar token CSRF
