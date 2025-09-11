@@ -32,7 +32,7 @@ $mensaje = isset($_GET['mensaje']) ? sanitize_input($_GET['mensaje']) : '';
                 <h1 class="mb-2">IE N° 2079 " COLEGIO ANTONIO RAIMONDI" 2025</h1>
                 <h3 id="fecha" class="mb-4"><?php echo date("d/m/Y H:i:s"); ?></h3>
                 
-                <h3 class="mb-4">BIENVENIDO, REGISTRA TU ASISTENCIA</h3>
+                <h3 class="mb-4">BIENVENIDO@, REGISTRA TU ASISTENCIA</h3>
                 
                 <div class="card shadow">
                     <div class="card-body">
