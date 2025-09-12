@@ -10,3 +10,4 @@ class AttendanceController {
     }
 }
 ?>
+// Vinculado a Issue #1
