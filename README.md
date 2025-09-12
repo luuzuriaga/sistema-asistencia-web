@@ -1,4 +1,6 @@
-# Sistema de Asistencia Web
+# Sistema Web Asistencia I.E. 2079
+Proyecto PA2: Modelado de Componentes y Patrones Arquitectónicos.
+Actualización del 12/09/2025: Revisión inicial de commits por Michael Roger.
 
 Este proyecto implementa un **sistema web** para mejorar el **control de asistencia del personal docente y administrativo** en instituciones educativas, reemplazando el registro manual por un sistema automatizado, rápido y seguro.
 
