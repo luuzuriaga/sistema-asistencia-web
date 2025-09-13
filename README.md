@@ -4,6 +4,8 @@ Este proyecto implementa un **sistema web** para mejorar el **control de asisten
 
 ## 📌 Descripción
 
+**Versión actualizada por RenzoDev - 2025**
+
 El sistema permite que los trabajadores registren su **entrada y salida** mediante un **usuario y contraseña**, almacenando la información en una base de datos y generando **reportes automáticos** para el área de personal.  
 Está diseñado para reducir:
 
