@@ -3,6 +3,7 @@ include_once '../../config.php';
 include_once '../../controlador/controlador_login.php';
 
 $error = isset($_GET['error']) ? sanitize_input($_GET['error']) : '';
+$attendance = isset($_POST['attendance']) ? "Registrada" : "No registrada"; // Nueva variable
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -40,6 +41,7 @@ $error = isset($_GET['error']) ? sanitize_input($_GET['error']) : '';
                             <img src="../public/images/logo1.png" alt="Logo" class="img-fluid mb-3" style="max-height: 80px;">
                             <h3 class="card-title">Sistema de Control de Asistencia</h3>
                             <p class="text-muted">Ingrese sus credenciales para continuar</p>
+                            <p>Versión PA02 - Registro de asistencia I.E. 2079</p>
                         </div>
                         
                         <?php if (!empty($error)): ?>
@@ -56,8 +58,19 @@ $error = isset($_GET['error']) ? sanitize_input($_GET['error']) : '';
                                 <label for="password" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="attendance" name="attendance" value="1">
+                                <label class="form-check-label" for="attendance">Registrar Asistencia</label>
+                            </div>
                             <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
                         </form>
+                        
+                        <?php
+                        // Mostrar estado de asistencia después del submit (solo para prueba)
+                        if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["usuario"])) {
+                            echo "<div class='alert alert-info mt-3'>Asistencia: $attendance para usuario " . htmlspecialchars($_POST["usuario"]) . "</div>";
+                        }
+                        ?>
                         
                         <div class="text-center mt-3">
                             <a href="/index.php">Volver al registro de asistencia</a>
