@@ -32,7 +32,7 @@ $html = '
 </head>
 <body>
     <div class="header">
-        <h2>IE N° 2079 "ANTONIO RAIMONDI"</h2>
+        <h2>IE N° 207900000 "ANTONIO RAIMONDI"</h2>
         <h3>Reporte de Asistencia</h3>
         <p>Del ' . date('d/m/Y', strtotime($fecha_inicio)) . ' al ' . date('d/m/Y', strtotime($fecha_fin)) . '</p>
     </div>

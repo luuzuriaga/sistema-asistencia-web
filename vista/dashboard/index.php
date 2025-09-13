@@ -2,6 +2,7 @@
 include_once '../../config.php';
 include_once '../../controlador/controlador_registrar_asistencia.php';
 ?>
+<!-- PUEBA CAMBIO -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
