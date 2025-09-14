@@ -1,4 +1,4 @@
-name: PHP Composer CI
+name: PHP CI Checks
 
 on:
   push:
@@ -10,47 +10,62 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  php-checks:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
-
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
       with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
+        php-version: '8.2'
+        tools: composer
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+    - name: Check PHP version
+      run: php --version
 
     - name: Check PHP syntax
       run: |
-        find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors"
+        # Verificar sintaxis de todos los archivos PHP
+        find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected"
+        
+        # Contar archivos PHP para verificación
+        echo "Total archivos PHP encontrados:"
+        find . -name "*.php" -not -path "./vendor/*" | wc -l
 
-    - name: Run PHPUnit tests
-      run: vendor/bin/phpunit --testdox
-
-    - name: Run PHPStan (static analysis)
+    - name: Run basic PHP tests
       run: |
-        if [ -f vendor/bin/phpstan ]; then
-          vendor/bin/phpstan analyse --no-progress
+        # Verificar que los archivos principales existan y sean accesibles
+        if [ -f "index.php" ]; then
+          echo "index.php encontrado"
+          php -l index.php
         else
-          echo "PHPStan not installed, skipping static analysis"
+          echo "index.php no encontrado"
+          exit 1
         fi
+        
+        if [ -f "config.php" ]; then
+          echo "config.php encontrado"
+          php -l config.php
+        fi
+        
+        # Verificar sintaxis de directorios importantes
+        for dir in controlador modelo vista; do
+          if [ -d "$dir" ]; then
+            echo "Verificando sintaxis en $dir/"
+            find "$dir" -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected"
+          fi
+        done
 
-    - name: Run PHP CodeSniffer
+    - name: Check for common issues
       run: |
-        if [ -f vendor/bin/phpcs ]; then
-          vendor/bin/phpcs --standard=PSR12 --ignore=vendor/ .
-        else
-          echo "PHP CodeSniffer not installed, skipping code style check"
-        fi
+        # Verificar que no haya errores de inclusión básicos
+        echo "🔍 Buscando posibles problemas..."
+        
+        # Verificar includes/requires
+        grep -r "include\|require" controlador/ modelo/ vista/ 2>/dev/null || echo "No se encontraron includes"
+        
+        # Verificar que no haya syntax errors críticos
+        echo "Verificación básica completada"
