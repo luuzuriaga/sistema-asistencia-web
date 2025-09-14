@@ -62,7 +62,7 @@ jobs:
     - name: Check for common issues
       run: |
         # Verificar que no haya errores de inclusión básicos
-        echo "🔍 Buscando posibles problemas..."
+        echo "Buscando posibles problemas..."
         
         # Verificar includes/requires
         grep -r "include\|require" controlador/ modelo/ vista/ 2>/dev/null || echo "No se encontraron includes"
