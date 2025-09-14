@@ -1,4 +1,4 @@
-name: PHP Composer
+name: PHP Composer CI
 
 on:
   push:
@@ -32,8 +32,25 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
+    - name: Check PHP syntax
+      run: |
+        find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors"
 
-    # - name: Run test suite
-    #   run: composer run-script test
+    - name: Run PHPUnit tests
+      run: vendor/bin/phpunit --testdox
+
+    - name: Run PHPStan (static analysis)
+      run: |
+        if [ -f vendor/bin/phpstan ]; then
+          vendor/bin/phpstan analyse --no-progress
+        else
+          echo "PHPStan not installed, skipping static analysis"
+        fi
+
+    - name: Run PHP CodeSniffer
+      run: |
+        if [ -f vendor/bin/phpcs ]; then
+          vendor/bin/phpcs --standard=PSR12 --ignore=vendor/ .
+        else
+          echo "PHP CodeSniffer not installed, skipping code style check"
+        fi
